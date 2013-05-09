@@ -346,6 +346,8 @@ public class EventBusBridge implements Handler<SockJSSocket> {
     } else {
       eb.send(authAddress, message, new Handler<Message<JsonObject>>() {
         public void handle(Message<JsonObject> reply) {
+          // Stash data from the auth response body as the authMetaData so that more that the authentication service can return relevant
+          // information such as user permissions, organisations, permissions etc.
           Auth auth = new Auth(sessionID, sock, reply.body());
           boolean authed = reply.body().getString("status").equals("ok") &&
                            (hook == null || hook.applyRecieveAuthRules(message, auth.getAuthMetaData()));
