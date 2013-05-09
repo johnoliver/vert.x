@@ -4,7 +4,6 @@ import java.util.Set;
 
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonObject;
-import org.vertx.java.core.sockjs.EventBusBridge.Auth;
 
 public interface EventBusBridgeHook {
 
@@ -46,8 +45,21 @@ public interface EventBusBridgeHook {
    */
   boolean handleUnregister(SockJSSocket sock, String address);
 
-
-  boolean applySendAuthRules(Set<JsonObject> authData, String address, Message msg);
+  /**
+   * Called when a message is being sent to the client from the event bus  
+   * @param authMetaData The meta data associated with the clients authentication  
+   * @param address The address that the message is being sent to
+   * @param msg The message
+   * @return true if the message can be forwarded to the client
+   */
+  boolean applySendAuthRules(Set<JsonObject> authMetaData, String address, Message msg);
+  
+  /**
+   * Called when a message is received from the client to be placed on the eventbus
+   * @param message Message to be sent
+   * @param authData meta data associated with the session that this message was sent with 
+   * @return true if the message can be forwarded to the eventbus
+   */
   boolean applyRecieveAuthRules(JsonObject message, JsonObject authData);
 
 
