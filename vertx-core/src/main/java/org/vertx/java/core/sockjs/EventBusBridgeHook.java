@@ -1,6 +1,10 @@
 package org.vertx.java.core.sockjs;
 
+import java.util.Set;
+
+import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonObject;
+import org.vertx.java.core.sockjs.EventBusBridge.Auth;
 
 public interface EventBusBridgeHook {
 
@@ -41,4 +45,10 @@ public interface EventBusBridgeHook {
    * @param address The address
    */
   boolean handleUnregister(SockJSSocket sock, String address);
+
+
+  boolean applySendAuthRules(Set<JsonObject> authData, String address, Message msg);
+  boolean applyRecieveAuthRules(JsonObject message, JsonObject authData);
+
+
 }
