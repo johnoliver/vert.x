@@ -603,6 +603,8 @@ public class DefaultPlatformManager implements PlatformManagerInternal, ModuleRe
       String jar = locateJar(names[i], cl);
       if (jar != null) {
         ljars.add(jar);
+      } else {
+        log.warn("Unable to find dependency '" + names[i] + "' this may make the installation unstable.");
       }
     }
     return ljars.toArray(new String[ljars.size()]);
